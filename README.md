@@ -61,13 +61,6 @@ not really nessarry since the JSON is parsed as a stream. So just add
 
 If you think this is an issue, I would be happy to consider a pull request.
 
-## Source
-
-The source is: http://dawa.aws.dk/vejedok
-
-This uses the autocomplete feature, with an empty search. This way a
-minimal (in terms of size) response is obtained.
-
 ##License
 
 **The software is license under "MIT"**
