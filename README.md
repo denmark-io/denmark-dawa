@@ -26,7 +26,7 @@ However the naïve implementation is performance wise not optimal. This module d
 * Detects errors and create custom error objects (http://dawa.aws.dk/generelt#fejlhaandtering).
 * Parses the JSON as a stream and adds back pressure.
 
-This is a class constructor with the signature `DAWARequest(pathname, query, settings)`:
+`DAWARequest` is a class constructor with the signature `DAWARequest(pathname, query, settings)`:
 
 ```javascript
 // Gets zipcodes including special ones (stormodtagere)
