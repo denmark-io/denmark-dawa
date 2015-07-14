@@ -1,0 +1,27 @@
+{
+  "name": "denmark-dawa",
+  "description": "A simple interface API for the DAWA service",
+  "version": "1.0.0",
+  "author": "Andreas Madsen <amwebdk@gmail.com>",
+  "scripts": {
+    "test": "tap test.js"
+  },
+  "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/AndreasMadsen/denmark-dawa.git"
+  },
+  "keywords": [
+    "Danmarks Adressers Web API",
+    "DAWA"
+  ],
+  "dependencies": {
+    "endpoint": "0.4.x",
+    "JSONStream": "1.0.x",
+    "util-extend": "1.0.x"
+  },
+  "devDependencies": {
+    "tap": "1.3.x"
+  },
+  "license": "MIT"
+}
