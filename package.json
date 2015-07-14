@@ -1,12 +1,12 @@
 {
   "name": "denmark-dawa",
   "description": "A simple interface API for the DAWA service",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Andreas Madsen <amwebdk@gmail.com>",
   "scripts": {
     "test": "tap test.js"
   },
-  "main": "./index.js",
+  "main": "./dawa.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/AndreasMadsen/denmark-dawa.git"
