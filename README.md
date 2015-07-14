@@ -43,6 +43,13 @@ req.once('error', function (err) {
 });
 ```
 
+Note that this module doesn't support the pagination API that DAWA provides.
+However it is kinda broken anyway since you can't beyond 400000 items. And
+not really nessarry since the JSON is parsed as a stream. So just add
+`{ per_side : 1000000 }` to the query object, to get all the requests.
+
+If you think this is an issue, I would be happy to consider a pull request.
+
 ## Source
 
 The source is: http://dawa.aws.dk/vejedok
