@@ -43,6 +43,17 @@ req.once('error', function (err) {
 });
 ```
 
+The `settings` object can be used to specify the protocol (http or https),
+http is the default:
+
+```javascript
+const req = new DAWARequest('/postnumre', {
+  stormodtagere: true
+}, {
+  protcol: 'https'
+});
+```
+
 Note that this module doesn't support the pagination API that DAWA provides.
 However it is kinda broken anyway since you can't beyond 400000 items. And
 not really nessarry since the JSON is parsed as a stream. So just add
