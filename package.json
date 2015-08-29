@@ -1,7 +1,7 @@
 {
   "name": "denmark-dawa",
   "description": "A simple interface API for the DAWA service",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Andreas Madsen <amwebdk@gmail.com>",
   "scripts": {
     "test": "tap test.js"
@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "endpoint": "0.4.x",
-    "JSONStream": "1.0.x",
+    "stream-json": "0.4.x",
     "util-extend": "1.0.x"
   },
   "devDependencies": {

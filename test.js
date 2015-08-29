@@ -5,6 +5,7 @@
 
 const DAWARequest = require('./dawa.js');
 const endpoint = require('endpoint');
+
 const test = require('tap').test;
 
 test('single item returned', { timeout: Infinity }, function (t) {
