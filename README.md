@@ -22,7 +22,7 @@ big JSON object.
 However the naïve implementation is performance wise not optimal. This module does the following:
 
 * Adds a `Accept-Encoding: gzip, deflate` header for data compression.
-* Adds `&noformat=` to the url to avoid prettified JSON strings.
+* Adds `&ndjson=` to the url to get a stream friendly interface and remove pretty printing.
 * Detects errors and create custom error objects (http://dawa.aws.dk/generelt#fejlhaandtering).
 * Parses the JSON as a stream and adds back pressure.
 

@@ -6,13 +6,8 @@ const url = require('url');
 const util = require('util');
 const zlib = require('zlib');
 const stream = require('stream');
-const extend = require('util-extend');
 const endpoint = require('endpoint');
-
-const Parser = require('stream-json/Parser');
-const Streamer = require('stream-json/Streamer');
-const Packer = require('stream-json/Packer');
-const StreamArray = require('stream-json/utils/StreamArray');
+const ndjsonpoint = require('ndjsonpoint');
 
 const RemoteError = require('./lib/remote-error.js');
 const hostname = 'dawa.aws.dk';
@@ -27,8 +22,8 @@ function DAWARequest(pathname, query, settings) {
   }
   stream.Transform.call(this, { objectMode: true });
 
-  settings = extend({ protocol: 'http' }, settings);
-  query = extend({ noformat: '' }, query);
+  settings = Object.assign({ protocol: 'http' }, settings);
+  query = Object.assign({ ndjson: '' }, query);
 
   const href = {
     hostname: hostname,
@@ -38,28 +33,12 @@ function DAWARequest(pathname, query, settings) {
     }
   };
 
-  this._parser = new Parser();
-  this._parser
-    .pipe(new Streamer())
-    .pipe(new Packer({
-      packKeys: true,
-      packStrings: true,
-      packNumbers: true
-    }))
-    .pipe(new StreamArray())
-    .pipe(this);
-
   this._req = request[settings.protocol](href);
   this._req.on('error', this.emit.bind(this, 'error'));
   this._req.once('response', this._handleResponse.bind(this));
 }
 module.exports = DAWARequest;
-util.inherits(DAWARequest, stream.Transform);
-
-DAWARequest.prototype._transform = function (chunk, encoding, done) {
-  this.push(chunk.value);
-  done(null);
-};
+util.inherits(DAWARequest, stream.PassThrough);
 
 function unzip(res) {
   // or, just use zlib.createUnzip() to handle both cases
@@ -77,7 +56,7 @@ DAWARequest.prototype._handleResponse = function (res) {
   if (res.statusCode !== 200) {
     this._parseError(content);
   } else {
-    this._parseStream(content);
+    content.pipe(ndjsonpoint()).pipe(this);
   }
 };
 
@@ -95,28 +74,4 @@ DAWARequest.prototype._parseError = function (content) {
     }
     self.emit('error', contentErr);
   }));
-};
-
-DAWARequest.prototype._parseStream = function (content) {
-  const self = this;
-
-  content.once('readable', function () {
-    let firstchar = content.read(1);
-    content.unshift(firstchar);
-    firstchar = firstchar.toString();
-
-    if (firstchar === '{') {
-      content.pipe(endpoint(function (err, content) {
-        if (err) return self.emit('error', err);
-        self.push(JSON.parse(content));
-        self.push(null);
-      }));
-    } else if (firstchar === '[') {
-      content.on('error', self.emit.bind(self, 'error'));
-      content.pipe(self._parser);
-    } else {
-      self.emit('error',
-        new TypeError('Unregnoized json format, first char: ' + firstchar));
-    }
-  });
 };
